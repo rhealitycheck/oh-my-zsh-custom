@@ -13,11 +13,11 @@ alias ll='ls -lrth' # reverse time long list file with human readable sizes
 alias la='ll -A'    # as per ll but show dotfiles, excluding '.' and '..'
 
 # make rm -rf shorter
-alias rmf='rm -rf'
+# alias rmf='rm -rf'
 
 # filesystem usage, default human readable sizes
 alias df='df -h'
 alias du='du -h'
 
 # git, see ~/.gitconfig for git aliases
-alias g='git'
+# alias g='git'

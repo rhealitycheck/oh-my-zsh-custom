@@ -65,7 +65,7 @@ function prompt_start() {
 function prompt_dir() {
   local bg_col=%{$BG[240]%}
   local fg_col=%{$FG[236]%}
-  local dir_icon="%{$fg[blue]%}  $ICONS[folder] "
+  local dir_icon="%{$fg[cyan]%}  $ICONS[folder] "
   local directory="%{$fg[white]%}%~"
 
   echo "${bg_col}${fg_col}$(prompt_separator)${dir_icon}${directory}"
