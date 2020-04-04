@@ -110,11 +110,13 @@ function prompt_battery() {
   fi
 
   if $(battery_is_charging) ; then
-    power_icon="%{$fg[yellow]%}${ICONS[battery_charging]}"
-  elif $(plugged_in) ; then
-    power_icon=''
-    icon=$ICONS[battery_plugged_in]
-    batt_col=$fg[green]
+    if [ $battery_perc -eq 100 ]; then
+      power_icon=''
+      icon=$ICONS[battery_plugged_in]
+      batt_col=$fg[green]
+    else
+      power_icon="%{$fg[yellow]%}${ICONS[battery_charging]}"
+    fi
   fi
   echo "%{$FG[240]%}$(rprompt_separator) %{$BG[240]%} %{$batt_col%}${icon}${power_icon} %{$fg[white]%}${battery_perc}%% %{$reset_color%}"
 }
