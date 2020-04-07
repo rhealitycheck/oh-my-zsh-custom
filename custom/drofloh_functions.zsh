@@ -9,7 +9,11 @@ ICONS=(
   # Prompt separators
   flame_right        $'\ue0c0' # 
   flame_left         $'\ue0c2' # 
-  terminal           $'\uf120' # 
+#  terminal           $'\u21b3' # ↳
+  terminal           $'\u2b91' # ↳
+  tarrow             $'\u279c' # ⮕
+#  arrow              $'\u2b95' # ⮕
+  arrow              $'\u27a9' # ⮕
 
   # OS logos
   apple_logo         $'\uf302' # 
@@ -34,17 +38,36 @@ ICONS=(
   ruby               $'\ue21e' #  
 
   # git status icons
-  git_branch         $'\ue0a0' # 
+#  git_branch         $'\ue0a0' # 
+  git_branch         $'\uf418' #  
   git_added          $'\uf457' # 
+#  git_added          $'\ufe62' # ﹢
   git_modified       $'\uf459' # 
+#  git_modified       $'\ufe12' # ︒
   git_deleted        $'\uf458' # 
+#  git_deleted        $'\ufe63' # ﹣
   git_renamed        $'\uf45a' # 
   git_unmerged       $'\ue727' # 
-  git_untracked      $'\uf128' # 
-  git_ahead          $'\uf061' # 
-  git_behind         $'\uf060' # 
+#  git_untracked      $'\uf128' # 
+  git_untracked      $'\uf440' # 
+#  git_ahead          $'\uf061' # 
+  git_ahead          $'\u21e1' # ⇡
+#  git_behind         $'\uf060' # 
+  git_behind         $'\u21e3' # ⇣
   git_remote_exists  $'\ufadf' # 﫟
   git_remote_missing $'\uf658' # 
+)
+
+COLORS=(
+  # darkest backgrounds to lightest
+  d0_bg	$BG[232]
+  d1_bg	$BG[234]
+  d2_bg $BG[238]
+
+  # darkest foregrounds to lightest
+  d0_fg	$FG[232]
+  d1_fg	$FG[234]
+  d2_fg	$FG[238]
 )
 
 function prompt_separator() {
@@ -55,29 +78,38 @@ function rprompt_separator() {
   echo $ICONS[flame_left]
 }
 
+function prompt_context() {
+  local user=`whoami`
+
+  if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CONNECTION" ]]; then
+    echo "$user@%m "
+  fi
+}
+
 function prompt_start() {
-  local bg_col=%{$BG[236]%}
+  local bg_col=%{$BG[232]%}
+  local fg_col=%{$FG[232]%}
   
   local ret_status="%(?:%{$fg[green]%} $ICONS[apple_logo] :%{$fg[red]%} $ICONS[apple_logo] )${reset_color}"
-  echo "${bg_col}${ret_status}"
+  echo "${bg_col}${ret_status}${fg_col}$(prompt_separator)"
 }
 
 function prompt_dir() {
-  local bg_col=%{$BG[240]%}
-  local fg_col=%{$FG[236]%}
-  local dir_icon="%{$fg[cyan]%}  $ICONS[folder] "
+  local bg_col=%{$BG[234]%}
+  local fg_col=%{$FG[234]%}
+  local dir_icon="%{$FG[075]%}  $ICONS[folder] "
   local directory="%{$fg[white]%}%~"
 
-  echo "${bg_col}${fg_col}$(prompt_separator)${dir_icon}${directory}"
+  echo "${bg_col}${fg_col}${dir_icon}${directory}${fg_col}$(prompt_separator)"
 }
 
 function prompt_git () {
 
-  local bg_col=$BG[244]
-  local fg_col=$FG[240]
+  local bg_col=$BG[238]
+  local fg_col=$FG[238]
 
-  local prompt_git_start="%{$fg_col%}$(prompt_separator)"
-  local prompt_git_end="%{$reset_color%}%{$FG[244]%}$(prompt_separator)"
+  local prompt_git_start="%{$fg_col%}"
+  local prompt_git_end="%{$reset_color%}%{$FG[238]%}$(prompt_separator)"
   # https://stackoverflow.com/questions/2180270/check-if-current-directory-is-a-git-repository
   if [ -d .git ] || git rev-parse --git-dir > /dev/null 2>&1; then
     echo "%{$bg_col%}${prompt_git_start} %{$fg[blue]%} $(parse_git_dirty) %{$fg[white]%}$(git_current_branch)$(git_prompt_status)$(git_remote_status)$(git_prompt_remote)${prompt_git_end}"
@@ -118,14 +150,15 @@ function prompt_battery() {
       power_icon="%{$fg[yellow]%}${ICONS[battery_charging]}"
     fi
   fi
-  echo "%{$FG[240]%}$(rprompt_separator) %{$BG[240]%} %{$batt_col%}${icon}${power_icon} %{$fg[white]%}${battery_perc}%% %{$reset_color%}"
+  echo "%{$FG[234]%}$(rprompt_separator) %{$BG[234]%} %{$batt_col%}${icon}${power_icon} %{$fg[white]%}${battery_perc}%% %{$reset_color%}"
 }
 
 function prompt_time() {
   local time_icon="%{$fg[cyan]%}${ICONS[time]}"
-  local the_time="%{$fg[white]%}[%T]"
+  local the_time="%{$FG[012]%}[%T]"
 
-  echo "%{$FG[244]%}$(rprompt_separator) %{$BG[244]%} ${time_icon} ${the_time}"
+#  echo "%{$FG[237]%}$(rprompt_separator) %{$BG[237]%} ${time_icon} ${the_time}"
+  echo "%{$FG[238]%}$(rprompt_separator) %{$BG[238]%} ${the_time}"
 }
 
 function prompt_ruby_rbenv() {

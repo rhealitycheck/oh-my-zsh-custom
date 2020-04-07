@@ -16,15 +16,15 @@
 ################################################################
 
 PROMPT='$(prompt_start)$(prompt_dir)$(prompt_git)
-%{$fg[white]%}${ICONS[terminal]} $ '
+$(prompt_context)%{$fg[green]%}${ICONS[arrow]} '
 
 RPROMPT='$(prompt_ruby_rbenv)$(prompt_time)$(prompt_battery)'
 
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}${ICONS[git_branch]}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}${ICONS[git_branch]}"
-ZSH_THEME_GIT_PROMPT_ADDED=" %{$fg[magenta]%}${ICONS[git_added]}"
-ZSH_THEME_GIT_PROMPT_MODIFIED=" %{$fg[magenta]%}${ICONS[git_modified]}"
-ZSH_THEME_GIT_PROMPT_DELETED=" %{$fg[magenta]%}${ICONS[git_deleted]}"
+ZSH_THEME_GIT_PROMPT_ADDED=" %{$fg[green]%}${ICONS[git_added]}"
+ZSH_THEME_GIT_PROMPT_MODIFIED=" %{$FG[198]%}${ICONS[git_modified]}"
+ZSH_THEME_GIT_PROMPT_DELETED=" %{$fg[red]%}${ICONS[git_deleted]}"
 ZSH_THEME_GIT_PROMPT_RENAMED=" %{$fg[magenta]%}${ICONS[git_renamed]}"
 ZSH_THEME_GIT_PROMPT_UNMERGED=" %{$fg[magenta]%}${ICONS[git_unmerged]}"
 ZSH_THEME_GIT_PROMPT_UNTRACKED=" %{$fg[magenta]%}${ICONS[git_untracked]}"
